@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 const TicketList = ({ tickets, handleRefund, lastTicketElementRef }) => {
   return (
     <List>
-      {tickets.map((ticket, index) => (
+      {tickets && tickets.map((ticket, index) => (
         <Ticket
           key={uuidv4()}
           {...ticket}

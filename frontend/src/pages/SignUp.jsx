@@ -52,6 +52,8 @@ export default function SignUp() {
       password: data.get('password'),
     };
 
+    console.log(user);
+
     try {
       await axiosInstance.post('/signup', user);
       toast.success('Sign up successful! Redirecting to login page...');

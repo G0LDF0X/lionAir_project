@@ -43,14 +43,13 @@ const Profile = () => {
       console.error('Failed to refund ticket', error);
     }
   };
-
   const uid = authState.user;
 
   const handleDeleteAccount = async () => {
     try {
       const response = await axiosInstance.delete(`/delete/${uid}`, {
         headers: {
-          Authorization: `Bearer ${authState.token}`,
+          Authorization: `Bearer ${authState.token.access_token}`,
         },
       });
 
