@@ -13,9 +13,8 @@ from sqlalchemy.orm import Session
 from contextlib import asynccontextmanager
 import traceback
 from sqlalchemy import and_, select, func
-from jwt import PyJWTError, decode
 import secrets
-from jose import jwt
+from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 import os
 from dotenv import load_dotenv
@@ -120,11 +119,11 @@ async def get_current_user(db: Session = Depends(get_db), token: str = Depends(o
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = decode(token, SECRET_KEY, algorithms=["HS256"])
+        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
         email: str = payload.get("sub")
         if email is None:
             raise credentials_exception
-    except PyJWTError as e:
+    except JWTError as e:
         print(f"Error decoding token: {e}")
         raise credentials_exception
     stmt = select(UserModel).where(UserModel.email == email)
